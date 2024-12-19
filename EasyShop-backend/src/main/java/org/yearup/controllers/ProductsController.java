@@ -21,6 +21,7 @@ public class ProductsController
     @Autowired
     public ProductsController(ProductDao productDao)
     {
+
         this.productDao = productDao;
     }
 
@@ -38,7 +39,7 @@ public class ProductsController
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -57,7 +58,7 @@ public class ProductsController
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -71,7 +72,7 @@ public class ProductsController
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -85,7 +86,7 @@ public class ProductsController
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -104,7 +105,7 @@ public class ProductsController
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

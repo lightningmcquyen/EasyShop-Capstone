@@ -15,6 +15,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 {
     public MySqlProductDao(DataSource dataSource)
     {
+
         super(dataSource);
     }
 
@@ -25,6 +26,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 
         String sql = "SELECT * FROM products " +
                 "WHERE (category_id = ? OR ? = -1) " +
+                "   AND (price <= ? OR ? = -1)" +
                 "   AND (price <= ? OR ? = -1) " +
                 "   AND (color = ? OR ? = '') ";
 
@@ -40,8 +42,10 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             statement.setInt(2, categoryId);
             statement.setBigDecimal(3, minPrice);
             statement.setBigDecimal(4, minPrice);
-            statement.setString(5, color);
-            statement.setString(6, color);
+            statement.setBigDecimal(5, maxPrice);
+            statement.setBigDecimal(6, maxPrice);
+            statement.setString(7, color);
+            statement.setString(8, color);
 
             ResultSet row = statement.executeQuery();
 
@@ -90,23 +94,18 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
 
 
     @Override
-    public Product getById(int productId)
-    {
+    public Product getById(int productId) {
         String sql = "SELECT * FROM products WHERE product_id = ?";
-        try (Connection connection = getConnection())
-        {
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, productId);
 
             ResultSet row = statement.executeQuery();
 
-            if (row.next())
-            {
+            if (row.next()) {
                 return mapRow(row);
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return null;
@@ -170,15 +169,16 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
         try (Connection connection = getConnection())
         {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, product.getName());
-            statement.setBigDecimal(2, product.getPrice());
-            statement.setInt(3, product.getCategoryId());
-            statement.setString(4, product.getDescription());
-            statement.setString(5, product.getColor());
-            statement.setString(6, product.getImageUrl());
-            statement.setInt(7, product.getStock());
-            statement.setBoolean(8, product.isFeatured());
-            statement.setInt(9, productId);
+            statement.setInt(1, product.getProductId());
+            statement.setString(2, product.getName());
+            statement.setBigDecimal(3, product.getPrice());
+            statement.setInt(4, product.getCategoryId());
+            statement.setString(5, product.getDescription());
+            statement.setString(6, product.getColor());
+            statement.setString(7, product.getImageUrl());
+            statement.setInt(8, product.getStock());
+            statement.setBoolean(9, product.isFeatured());
+            statement.setInt(10, product.getProductId());
 
             statement.executeUpdate();
         }

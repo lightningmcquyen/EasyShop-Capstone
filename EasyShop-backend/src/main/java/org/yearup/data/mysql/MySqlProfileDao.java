@@ -3,7 +3,7 @@ package org.yearup.data.mysql;
 import org.springframework.stereotype.Component;
 import org.yearup.models.Profile;
 import org.yearup.data.ProfileDao;
-
+import javax.management.relation.RelationSupport;
 import javax.sql.DataSource;
 import java.sql.*;
 
@@ -12,6 +12,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 {
     public MySqlProfileDao(DataSource dataSource)
     {
+
         super(dataSource);
     }
 
@@ -40,6 +41,70 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         }
         catch (SQLException e)
         {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Profile getUserById(int userId) {
+        String firstName, lastName, phone, email, address, city, state, zip;
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT * FROM profiles
+                    WHERE user_id = ?;
+                    """);
+            statement.setInt(1, userId);
+
+            ResultSet rs = statement.executeQuery();
+
+            rs.next();
+            firstName = rs.getString("first_name");
+            lastName = rs.getString("last_name");
+            phone = rs.getString("phone");
+            email = rs.getString("email");
+            address = rs.getString("address");
+            city = rs.getString("city");
+            state = rs.getString("state");
+            zip = rs.getString("zip");
+
+
+            return new Profile(userId, firstName, lastName, phone, email, address, city, state, zip);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateUser(int userId, Profile profile) {
+        try(Connection connection = getConnection()){
+
+            PreparedStatement statement = connection.prepareStatement("""
+                    UPDATE profiles
+                    SET first_name = ?,
+                        last_name = ?,
+                        phone = ?,
+                        email = ?,
+                        address = ?,
+                        city = ?,
+                        state = ?,
+                        zip = ?
+                    WHERE user_id = ?;
+                    """);
+            statement.setString(1, profile.getFirstName());
+            statement.setString(2, profile.getLastName());
+            statement.setString(3, profile.getPhone());
+            statement.setString(4, profile.getEmail());
+            statement.setString(5, profile.getAddress());
+            statement.setString(6, profile.getCity());
+            statement.setString(7, profile.getState());
+            statement.setString(8, profile.getZip());
+            statement.setInt(9, userId);
+
+            statement.executeUpdate();
+
+        }catch(SQLException e){
             throw new RuntimeException(e);
         }
     }

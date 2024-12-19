@@ -17,6 +17,7 @@ public class MySqlUserDao extends MySqlDaoBase implements UserDao
     @Autowired
     public MySqlUserDao(DataSource dataSource)
     {
+
         super(dataSource);
     }
 

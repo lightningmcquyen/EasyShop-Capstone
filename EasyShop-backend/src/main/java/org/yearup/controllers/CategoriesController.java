@@ -12,6 +12,10 @@ import org.yearup.models.Category;
 import org.yearup.models.Product;
 import java.util.List;
 
+// add the annotations to make this a REST controller
+// add the annotation to make this controller the endpoint for the following url
+// http://localhost:8080/categories
+// add annotation to allow cross site origin requests
 @RestController
 @RequestMapping("/categories")
 @CrossOrigin
@@ -29,8 +33,7 @@ public class CategoriesController {
     }
 
     // add the appropriate annotation for a get action
-    @GetMapping("")
-    @PreAuthorize("permitAll()")
+    @GetMapping()
     public List<Category> getAll() {
         try
         {
@@ -43,26 +46,24 @@ public class CategoriesController {
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     // add the appropriate annotation for a get action
     @GetMapping("/{id}")
-    @PreAuthorize("permitAll()")
     public Category getById(@PathVariable int id) {
         // get the category by id
         var category = categoryDao.getById(id);
         if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
         }
-        return category;
+        return categoryDao.getById(id);
     }
 
     // the url to return all products in category 1 would look like this
     // https://localhost:8080/categories/1/products
     @GetMapping("{categoryId}/products")
-    @PreAuthorize("permitAll()")
     public List<Product> getProductsById(@PathVariable int categoryId) {
         // get a list of product by categoryId
         try
@@ -76,7 +77,7 @@ public class CategoriesController {
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -91,14 +92,14 @@ public class CategoriesController {
             Category createdCategory = categoryDao.create(category);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping ("{id}")
+    @PutMapping
     public void updateCategory(@PathVariable int id, @RequestBody Category category) {
         // update the category by id
         try{
@@ -106,7 +107,7 @@ public class CategoriesController {
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -115,13 +116,13 @@ public class CategoriesController {
     // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-//  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
         try {
             categoryDao.delete(id);
             return ResponseEntity.noContent().build();
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

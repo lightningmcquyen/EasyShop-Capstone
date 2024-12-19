@@ -10,6 +10,7 @@ public abstract class MySqlDaoBase
 
     public MySqlDaoBase(DataSource dataSource)
     {
+
         this.dataSource = dataSource;
     }
 
