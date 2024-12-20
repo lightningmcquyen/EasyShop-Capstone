@@ -3,8 +3,6 @@
 ---
 ![Project Board](EasyShop-backend/src/main/resources/project-board.png)
 
-Reading the instructions with one another is like smelling the food before you eat it. I was incredibly overwhelmed by the 20+ pages of instructions and so creating a project board was a top priority for me. For every line of instruction, I created a task.
-
 ---
 
 ## Introduction
@@ -24,10 +22,9 @@ Reading the instructions with one another is like smelling the food before you e
 
 ## Technologies Used
 - **Java 17**
-- **Spring Boot 2.7.x**
+- **Spring Boot**
 - **Spring Security** (for authentication and authorization)
 - **MySQL** (for the relational database)
-- **Hibernate/JPA** (for object-relational mapping)
 - **Postman** (for API testing)
 - **JWT** (for token-based authentication)
 
