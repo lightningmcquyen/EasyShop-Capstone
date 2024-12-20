@@ -25,7 +25,7 @@ public class CategoriesController {
 
 
     // create an Autowired controller to inject the categoryDao and ProductDao
-
+    // provides a clean interface for accessing data
     @Autowired
     public CategoriesController(CategoryDao categoryDao, ProductDao productDao) {
         this.categoryDao = categoryDao;

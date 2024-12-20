@@ -1,14 +1,21 @@
-# EasyShop
+## ![Easy Shop](EasyShop-backend/src/main/resources/logo.png)
+
+---
+![Project Board](EasyShop-backend/src/main/resources/project-board.png)
+
+---
 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Technologies Used](#technologies-used)
+- [Logic Implementation](#logic-implementation)
+- [Debugging](#debugging)
 - [API Endpoints](#api-endpoints)
 
 ---
 
 ## Introduction
-**EasyShop** is a simple e-commerce web application developed with Java, Spring Boot, and MySQL. It allows users to browse products, manage their shopping cart, and place orders. Admin users can manage products, categories, and user roles. The system provides secure authentication and authorization for all user actions.
+**EasyShop** version 2 is a simple e-commerce web application developed with Java, Spring Boot, and MySQL. It allows users to browse products, manage their shopping cart, and place orders. Admin users can manage products, categories, and user roles. The system provides secure authentication and authorization for all user actions.
 
 ---
 
@@ -20,6 +27,20 @@
 - **Hibernate/JPA** (for object-relational mapping)
 - **Postman** (for API testing)
 - **JWT** (for token-based authentication)
+
+---
+# Logic Implementation ##
+
+![Logic](EasyShop-backend/src/main/resources/logic-example.png)
+
+---
+# Debugging
+
+### **BUG 1**
+![Update Versus Create](EasyShop-backend/src/main/resources/products-update.png)
+
+### **BUG 2**
+![SQL Duplicate](EasyShop-backend/src/main/resources/sql-dup.png)
 
 ---
 
